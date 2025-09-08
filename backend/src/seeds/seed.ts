@@ -1,5 +1,26 @@
+import { config } from 'dotenv';
+import { resolve } from 'path';
+
+// Load environment variables from the root directory
+config({ path: resolve(__dirname, '../../../.env') });
+
+// Verify environment variables are loaded
+if (!process.env.DATABASE_URL) {
+  console.error('❌ DATABASE_URL environment variable is not set');
+  console.log('Current working directory:', process.cwd());
+  console.log('Looking for .env file at:', resolve(__dirname, '../../../.env'));
+  process.exit(1);
+}
+
+console.log('✅ Environment variables loaded');
+console.log('🔗 DATABASE_URL:', process.env.DATABASE_URL);
+
 import bcrypt from 'bcryptjs';
-import { pool } from '../config/database';
+import { Pool } from 'pg';
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
 
 async function seedDatabase() {
   try {
