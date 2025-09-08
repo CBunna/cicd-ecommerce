@@ -23,7 +23,13 @@ describe('App', () => {
         .expect(200);
 
       expect(response.body).toEqual({
-        message: 'E-commerce API is running!'
+        message: 'E-commerce API is running!',
+        endpoints: {
+          health: '/health',
+          docs: '/api/docs',
+          auth: '/api/auth',
+          users: '/api/users'
+        }
       });
     });
   });

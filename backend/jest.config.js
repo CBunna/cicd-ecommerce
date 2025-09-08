@@ -2,16 +2,25 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   roots: ['<rootDir>/src', '<rootDir>/tests'],
-  testMatch: [
-    '**/__tests__/**/*.(ts|js)',
-    '**/*.(test|spec).(ts|js)'
-  ],
+  testMatch: ['**/__tests__/**/*.ts', '**/?(*.)+(spec|test).ts'],
   transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest'
+    '^.+\\.ts$': 'ts-jest',
   },
   collectCoverageFrom: [
-    'src/**/*.(ts|js)',
-    '!src/**/*.d.ts'
+    'src/**/*.ts',
+    '!src/**/*.d.ts',
+    '!src/server.ts',
+    '!src/migrations/**',
+    '!src/seeds/**',
   ],
-  setupFilesAfterEnv: ['<rootDir>/tests/setup.ts']
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov', 'html'],
+  setupFilesAfterEnv: ['<rootDir>/tests/setup.ts'],
+  testTimeout: 15000,
+  // Ensure tests run in sequence to avoid database conflicts
+  maxWorkers: 1,
+  // Detect open handles
+  detectOpenHandles: true,
+  // Force exit after tests
+  forceExit: true,
 };
