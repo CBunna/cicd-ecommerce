@@ -8,6 +8,7 @@ import swaggerUi from 'swagger-ui-express';
 
 // Routes
 import authRoutes from './routes/auth';
+import userRoutes from './routes/users';
 
 const app = express();
 
@@ -49,6 +50,15 @@ const swaggerOptions = {
         description: process.env.NODE_ENV === 'production' ? 'Production server' : 'Development server',
       },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
   },
   apis: ['./src/routes/*.ts'],
 };
@@ -72,13 +82,15 @@ app.get('/api', (req, res) => {
     endpoints: {
       health: '/health',
       docs: '/api/docs',
-      auth: '/api/auth'
+      auth: '/api/auth',
+      users: '/api/users'
     }
   });
 });
 
 // API routes
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 // 404 handler
 app.use('*', (req, res) => {

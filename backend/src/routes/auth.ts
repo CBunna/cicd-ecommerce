@@ -1,7 +1,18 @@
 import { Router } from 'express';
 import { register, login } from '../controllers/auth';
+import { authenticate, getCurrentUser } from '../middleware/auth';
 
 const router = Router();
+
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
 
 /**
  * @swagger
@@ -38,17 +49,6 @@ const router = Router();
  *     responses:
  *       201:
  *         description: User registered successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                 user:
- *                   type: object
- *                 token:
- *                   type: string
  *       400:
  *         description: Validation error
  *       409:
@@ -75,8 +75,10 @@ router.post('/register', register);
  *               email:
  *                 type: string
  *                 format: email
+ *                 example: admin@example.com
  *               password:
  *                 type: string
+ *                 example: admin123
  *     responses:
  *       200:
  *         description: Login successful
@@ -84,5 +86,39 @@ router.post('/register', register);
  *         description: Invalid credentials
  */
 router.post('/login', login);
+
+/**
+ * @swagger
+ * /api/auth/me:
+ *   get:
+ *     summary: Get current user profile
+ *     tags: [Authentication]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Current user information
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                     email:
+ *                       type: string
+ *                     firstName:
+ *                       type: string
+ *                     lastName:
+ *                       type: string
+ *                     role:
+ *                       type: string
+ *       401:
+ *         description: Not authenticated
+ */
+router.get('/me', authenticate, getCurrentUser);
 
 export default router;
