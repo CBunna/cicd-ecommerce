@@ -1,32 +1,115 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+
+// Context
+import { AuthProvider } from './context/AuthContext';
+
+// Layout
+import Header from './components/Layout/Header';
+import Footer from './components/Layout/Footer';
+
+// Pages
+import Home from './pages/Home';
+import Login from './pages/Auth/Login';
+import Register from './pages/Auth/Register';
+import Profile from './pages/Profile';
+
+// Components
+import ProtectedRoute from './components/ProtectedRoute';
+
+// Placeholder pages
+const ProductList = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <h1 className="text-2xl font-bold text-gray-900">Products (Coming Soon)</h1>
+  </div>
+);
+
+const Cart = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <h1 className="text-2xl font-bold text-gray-900">Shopping Cart (Coming Soon)</h1>
+  </div>
+);
+
+const Orders = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <h1 className="text-2xl font-bold text-gray-900">Orders (Coming Soon)</h1>
+  </div>
+);
+
+const AdminDashboard = () => (
+  <div className="min-h-screen flex items-center justify-center">
+    <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard (Coming Soon)</h1>
+  </div>
+);
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900">
-            E-commerce DevOps Project
-          </h1>
+    <AuthProvider>
+      <Router>
+        <div className="min-h-screen bg-gray-50 flex flex-col">
+          <Header />
+          <main className="flex-grow">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/products" element={<ProductList />} />
+              <Route path="/cart" element={<Cart />} />
+              
+              {/* Protected Routes */}
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/orders"
+                element={
+                  <ProtectedRoute>
+                    <Orders />
+                  </ProtectedRoute>
+                }
+              />
+              
+              {/* Admin Routes */}
+              <Route
+                path="/admin"
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </main>
+          <Footer />
+          <Toaster 
+            position="top-right"
+            toastOptions={{
+              duration: 4000,
+              style: {
+                background: '#363636',
+                color: '#fff',
+              },
+              success: {
+                style: {
+                  background: '#10B981',
+                },
+              },
+              error: {
+                style: {
+                  background: '#EF4444',
+                },
+              },
+            }}
+          />
         </div>
-      </header>
-      <main>
-        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-          <div className="px-4 py-6 sm:px-0">
-            <div className="border-4 border-dashed border-gray-200 rounded-lg h-96 flex items-center justify-center">
-              <div className="text-center">
-                <h2 className="text-2xl font-semibold text-gray-700 mb-4">
-                  Welcome to Your E-commerce Project!
-                </h2>
-                <p className="text-gray-500">
-                  Ready for DevOps practice with atomic commits and CI/CD
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-    </div>
+      </Router>
+    </AuthProvider>
   );
 }
 
