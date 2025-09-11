@@ -1,4 +1,8 @@
-[![CI Pipeline](https://github.com/CBunna/cicd-ecommerce/actions/workflows/ci.yml/badge.svg)](https://github.com/CBunna/cicd-ecommerce/actions/workflows/ci.yml)# E-Commerce Project
+[![CI Pipeline](https://github.com/CBunna/cicd-ecommerce/actions/workflows/ci.yml/badge.svg)](https://github.com/CBunna/cicd-ecommerce/actions/workflows/ci.yml)
+
+
+
+# E-Commerce Project
 
 A simple e-commerce website built with React frontend and Node.js backend. This is a learning project for practicing full-stack development.
 
