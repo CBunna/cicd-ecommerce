@@ -24,14 +24,14 @@ export const getAllProducts = async (req: Request, res: Response) => {
       ORDER BY p.created_at DESC
     `);
 
-    res.json({
+    return res.json({
       success: true,
       data: result.rows,
       count: result.rowCount
     });
   } catch (error) {
     console.error('Error fetching products:', error);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: 'Error fetching products'
     });
@@ -69,13 +69,13 @@ export const getProductById = async (req: Request, res: Response) => {
       });
     }
 
-    res.json({
+    return res.json({
       success: true,
       data: result.rows[0]
     });
   } catch (error) {
     console.error('Error fetching product:', error);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: 'Error fetching product'
     });
