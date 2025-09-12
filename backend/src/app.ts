@@ -9,6 +9,7 @@ import swaggerUi from 'swagger-ui-express';
 // Routes
 import authRoutes from './routes/auth';
 import userRoutes from './routes/users';
+import productRoutes from './routes/products';
 
 const app = express();
 
@@ -91,6 +92,7 @@ app.get('/api', (req, res) => {
 // API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/products', productRoutes);
 
 // 404 handler
 app.use('*', (req, res) => {

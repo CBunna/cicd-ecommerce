@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
@@ -14,16 +13,12 @@ import Home from './pages/Home';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 import Profile from './pages/Profile';
+import ProductList from './pages/ProductList';
 
 // Components
 import ProtectedRoute from './components/ProtectedRoute';
 
 // Placeholder pages
-const ProductList = () => (
-  <div className="min-h-screen flex items-center justify-center">
-    <h1 className="text-2xl font-bold text-gray-900">Products (Coming Soon)</h1>
-  </div>
-);
 
 const Cart = () => (
   <div className="min-h-screen flex items-center justify-center">

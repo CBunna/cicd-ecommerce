@@ -70,8 +70,8 @@ async function runMigrations() {
     
     // Import the initial migration
     const migrationModule = await import('./001_initial_schema');
-    const up = migrationModule.up || migrationModule.default?.up;
-    const down = migrationModule.down || migrationModule.default?.down;
+    const up = migrationModule.up;
+    const down = migrationModule.down;
     
     const migrations: Migration[] = [
       { id: '001_initial_schema', up, down }
